@@ -8,6 +8,6 @@
 - Initialized the faiss index and stored the embeddings in it.
 - Provided Query was converted to embeddings
 - Query Embeddings was passed to the faiss index to search for related Document Embedding
--Got Distances And Indices as Output 
--Mapped and obtained the related Document ID and Document    
--
+- Got Distances And Indices as Output 
+- Mapped and obtained the related Document ID and Document    
+
