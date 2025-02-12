@@ -38,8 +38,8 @@
   - creating scrapy process that runs in jupyter notebook
   - providing class name so that it guides the spider to crawl
   - starting the process or runs spider and collects data.
+  
   ```python
-# List to store extracted data
 scraped_data = []
 class LinksSpider(scrapy.Spider):
     name = "link_spider"
