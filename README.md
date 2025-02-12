@@ -40,8 +40,8 @@
   - starting the process or runs spider and collects data.
   
   ```python
-scraped_data = []
-class LinksSpider(scrapy.Spider):
+  scraped_data = []
+  class LinksSpider(scrapy.Spider):
     name = "link_spider"
     start_urls = ["https://www.langchain.com"]  # Replace with your target link
 
@@ -65,7 +65,8 @@ class LinksSpider(scrapy.Spider):
         # Store extracted data in a list
         scraped_data.append({"url": response.url,
             "title": response.css("title::text").get(),"summary": summary})  
-```
+  ```
+
 
 ## Creating dataframe  
 - Creating DataFrame and storing the collected Documents along with document ID created.
@@ -77,8 +78,48 @@ class LinksSpider(scrapy.Spider):
 -  Create Function and pass query as argument and  convert it to embeddings using the same mini LM.
 -  Search it in index along with given paramater top_k.
 -  Distances and indices can be obtained from it.
+```python
+def search_query(query, top_k=3):
+    # Convert query into embedding
+    query_embedding = model.encode([query])
+    
+    # Search the FAISS index for relevant documents
+    distances, indices = index.search(np.array(query_embedding), top_k)
+    
+    # Return matching documents and corresponding IDs
+    results = []
+    for i in range(top_k):
+        doc_index = indices[0][i]  # Get index from FAISS results
+        results.append({
+            'ID': int(data_frame.iloc[doc_index]['doc_ID']),  # Use index to get the corresponding ID
+            'document': data_frame.iloc[doc_index]['DOCUMENTS'],  # Use index to get the document
+            'similarity_score': float(distances[0][i]) # Similarity score from FAISS
+        })
+    
+    return results,indices
+```
+
+
 ## Retrieving Related Documents Through Index Where Cosine Similarity Search Is Performed
 - Normalize embeddings before passing to faiss.
 - Used IndexFlatIP instead for initializing and passing the dimension
 - Stored the normalised embedding in index and obtained distances and indicies
+```python
+def search_query(query, top_k=3):
+    query_embedding = model.encode([query])
+    faiss.normalize_L2(query_embedding)  # Normalize query for cosine similarity
+
+    distances, indices = index.search(np.array(query_embedding), top_k)
+
+    results = []
+    for i in range(top_k):
+        doc_index = indices[0][i]
+        results.append({
+            'ID': int(data_frame.iloc[doc_index]['doc_ID']),
+            'document': data_frame.iloc[doc_index]['DOCUMENTS'],
+            'similarity_score': float(distances[0][i])  # Now it's cosine similarity
+        })
+    
+    return results
+```
 
