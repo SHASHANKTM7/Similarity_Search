@@ -38,7 +38,8 @@
   - creating scrapy process that runs in jupyter notebook
   - providing class name so that it guides the spider to crawl
   - starting the process or runs spider and collects data.
-  - ![Scrappy code](C:\Users\SHASHANK_\Pictures\scrappy.png)
+  - <img src="C:\Users\SHASHANK_\Pictures\scrappy.png" alt="Alt Text" width="300">
+
     
 - Creating DataFrame and storing the collected Documents along with document ID created.
 - The next step is loading sentence transformer  model called mini LM.    
