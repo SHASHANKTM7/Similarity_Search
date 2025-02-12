@@ -38,7 +38,34 @@
   - creating scrapy process that runs in jupyter notebook
   - providing class name so that it guides the spider to crawl
   - starting the process or runs spider and collects data.
-  - ![alt text](C:\Users\SHASHANK_\Pictures\scrappy.png)
+  ```python
+# List to store extracted data
+scraped_data = []
+class LinksSpider(scrapy.Spider):
+    name = "link_spider"
+    start_urls = ["https://www.langchain.com"]  # Replace with your target link
+
+    def parse(self, response):
+        # Extract all links from the main page
+        links = response.css("a::attr(href)").getall()
+        for link in links:
+            if link.startswith("http"):  # Ensure it's a valid absolute URL
+                yield response.follow(link, callback=self.parse_link)
+
+    def parse_link(self, response:
+        # Extract text content from the page
+        text_content = " ".join(response.css("p::text").getall())  # Extract all paragraph text
+
+        if text_content:
+            # Generate a summary (max length 100 words)
+            summary = summarizer(text_content, max_length=100, min_length=30, do_sample=False)[0]["summary_text"]
+        else:
+            summary = "No summary available"
+
+        # Store extracted data in a list
+        scraped_data.append({"url": response.url,
+            "title": response.css("title::text").get(),"summary": summary})  
+```
 
     
 - Creating DataFrame and storing the collected Documents along with document ID created.
