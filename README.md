@@ -67,13 +67,13 @@ class LinksSpider(scrapy.Spider):
             "title": response.css("title::text").get(),"summary": summary})  
 ```
 
-    
+## Creating dataframe  
 - Creating DataFrame and storing the collected Documents along with document ID created.
 - The next step is loading sentence transformer  model called mini LM.    
 - And with the help of this model convert the documents to embeddings.
 - Initialize the faiss index and pass the dimension parameter
 
-  ## Retrieving Related Documents Through Index Using L2 Distance For Obtaining Distance
+## Retrieving Related Documents Through Index Using L2 Distance For Obtaining Distance
 -  Create Function and pass query as argument and  convert it to embeddings using the same mini LM.
 -  Search it in index along with given paramater top_k.
 -  Distances and indices can be obtained from it.
