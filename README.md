@@ -38,7 +38,7 @@
   - creating scrapy process that runs in jupyter notebook
   - providing class name so that it guides the spider to crawl
   - starting the process or runs spider and collects data.
-  - <img src="C:\Users\SHASHANK_\Pictures\scrappy.png" alt="Alt Text" width="300">
+  - ![alt text](C:\Users\SHASHANK_\Pictures\scrappy.png)
 
     
 - Creating DataFrame and storing the collected Documents along with document ID created.
